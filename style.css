@@ -1,271 +1,256 @@
-/* ================================
+/* =========================
    RESET & BASE
-================================ */
+========================= */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html, body {
-    width: 100%;
-    min-height: 100vh;
-    font-family: "Segoe UI", Inter, system-ui, sans-serif;
-    background: #f3f5f9;
-    color: #1f2937;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
+  background: #ffffff;
+  color: #111;
 }
 
-/* ================================
-   THEME VARIABLES
-================================ */
-:root {
-    --primary: #1e40af;
-    --primary-soft: #e0e7ff;
-    --border: #d1d5db;
-    --muted: #6b7280;
-    --white: #ffffff;
-}
-
-/* ================================
-   MAIN CONTAINER
-================================ */
+/* =========================
+   CONTAINER
+========================= */
 .container {
-    max-width: 980px;
-    margin: 60px auto;
-    padding: 42px;
-    background: var(--white);
-    border-radius: 18px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+  max-width: 1100px;
+  width: 100%;
+  margin: auto;
+  padding: 24px 16px;
 }
 
-/* ================================
+/* =========================
    TITLE
-================================ */
+========================= */
 h1 {
-    text-align: center;
-    font-size: 30px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #111827;
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
 }
 
-.subtitle {
-    text-align: center;
-    font-size: 14px;
-    color: var(--muted);
-    margin-bottom: 30px;
-}
-
-/* ================================
+/* =========================
    TOGGLE SWITCH
-================================ */
+========================= */
 .toggle-box {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    font-size: 14px;
-    margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-weight: 500;
 }
 
 .switch {
-    position: relative;
-    width: 52px;
-    height: 28px;
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
 }
 
 .switch input {
-    display: none;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .slider {
-    position: absolute;
-    inset: 0;
-    background: #cbd5e1;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: 0.3s;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 24px;
+  transition: 0.3s;
 }
 
-.slider::before {
-    content: "";
-    position: absolute;
-    width: 22px;
-    height: 22px;
-    top: 3px;
-    left: 3px;
-    background: var(--white);
-    border-radius: 50%;
-    transition: 0.3s;
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
 }
 
 .switch input:checked + .slider {
-    background: var(--primary);
+  background-color: #111;
 }
 
-.switch input:checked + .slider::before {
-    transform: translateX(24px);
+.switch input:checked + .slider:before {
+  transform: translateX(22px);
 }
 
-/* ================================
-   INPUTS
-================================ */
-input,
-select {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    font-size: 14px;
-    background: var(--white);
-    transition: 0.2s ease;
-}
-
-input:focus,
-select:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.15);
-}
-
-/* ================================
+/* =========================
    PREVIOUS CGPA
-================================ */
+========================= */
 .previous {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-bottom: 22px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.previous input {
+  flex: 1;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
-/* ================================
+/* =========================
+   TABLE WRAPPER (MOBILE FIX)
+========================= */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+
+/* =========================
    TABLE
-================================ */
+========================= */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 25px;
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  background: #fff;
 }
 
-thead th {
-    background: #111827;
-    color: #ffffff;
-    padding: 15px;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
+thead {
+  background: #111;
+  color: #fff;
 }
 
-tbody td {
-    border-bottom: 1px solid var(--border);
-    padding: 12px;
-    text-align: center;
+th, td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
 }
 
-tbody td input,
-tbody td select {
-    text-align: center;
+th {
+  font-weight: 600;
 }
 
-/* ================================
+td input,
+td select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+td input:focus,
+td select:focus {
+  border-color: #111;
+}
+
+/* =========================
    BUTTONS
-================================ */
+========================= */
 .buttons {
-    display: flex;
-    gap: 16px;
-    margin-top: 28px;
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  margin-bottom: 24px;
 }
 
 button {
-    padding: 13px 28px;
-    border-radius: 10px;
-    border: none;
-    background: var(--primary);
-    color: var(--white);
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.25s ease;
+  flex: 1;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 1px solid #111;
+  background: #111;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 button:hover {
-    background: #1e3a8a;
+  background: #fff;
+  color: #111;
 }
 
-/* ================================
+/* =========================
    RESULTS
-================================ */
+========================= */
 .results {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-    margin-top: 35px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .results p {
-    background: var(--primary-soft);
-    padding: 22px;
-    border-radius: 14px;
-    text-align: center;
-    font-size: 15px;
-    font-weight: 600;
-    color: #1e3a8a;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+  font-weight: 600;
 }
 
-/* ================================
+/* =========================
    PRINT SECTION
-================================ */
+========================= */
 .print-section {
-    margin-top: 40px;
-    padding-top: 28px;
-    border-top: 1px solid var(--border);
-}
-
-.print-section h3 {
-    margin-bottom: 18px;
-    font-size: 18px;
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
 }
 
 .print-inputs {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 20px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
-.print-section button {
-    width: 100%;
+.print-inputs input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
-/* ================================
-   FOOTER
-================================ */
+/* =========================
+   THANK YOU
+========================= */
 .thanks {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 13px;
-    color: var(--muted);
+  text-align: center;
+  margin-top: 32px;
+  font-size: 0.9rem;
+  color: #555;
 }
 
-/* ================================
-   RESPONSIVE
-================================ */
+/* =========================
+   MOBILE OPTIMIZATION
+========================= */
 @media (max-width: 768px) {
-    .container {
-        margin: 30px 16px;
-        padding: 28px;
-    }
 
-    .previous,
-    .results,
-    .print-inputs {
-        grid-template-columns: 1fr;
-    }
+  h1 {
+    font-size: 1.7rem;
+  }
 
-    .buttons {
-        flex-direction: column;
-    }
+  .buttons {
+    flex-direction: column;
+  }
+
+  .print-inputs {
+    flex-direction: column;
+  }
+
 }
