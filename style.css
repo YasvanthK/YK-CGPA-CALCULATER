@@ -1,256 +1,149 @@
-/* =========================
-   RESET & BASE
-========================= */
 * {
-  box-sizing: border-box;
+box-sizing: border-box;
+font-family: Arial, sans-serif;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
-  background: #ffffff;
-  color: #111;
+body {
+margin: 0;
+background: #f4f6f9;
 }
 
-/* =========================
-   CONTAINER
-========================= */
+body.dark {
+background: #121212;
+color: #eee;
+}
+
 .container {
-  max-width: 1100px;
-  width: 100%;
-  margin: auto;
-  padding: 24px 16px;
+max-width: 900px;
+margin: auto;
+padding: 15px;
 }
 
-/* =========================
-   TITLE
-========================= */
+header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
 h1 {
-  text-align: center;
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin-bottom: 24px;
-  letter-spacing: -0.5px;
+font-size: clamp(1.5rem, 4vw, 2.2rem);
 }
 
-/* =========================
-   TOGGLE SWITCH
-========================= */
-.toggle-box {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-  font-weight: 500;
+.dark-btn {
+font-size: 20px;
+cursor: pointer;
+background: none;
+border: none;
 }
 
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 46px;
-  height: 24px;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  border-radius: 24px;
-  transition: 0.3s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  border-radius: 50%;
-  transition: 0.3s;
-}
-
-.switch input:checked + .slider {
-  background-color: #111;
-}
-
-.switch input:checked + .slider:before {
-  transform: translateX(22px);
-}
-
-/* =========================
-   PREVIOUS CGPA
-========================= */
-.previous {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.previous input {
-  flex: 1;
-}
-
-.hidden {
-  display: none;
-}
-
-/* =========================
-   TABLE WRAPPER (MOBILE FIX)
-========================= */
-.table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-  margin-bottom: 16px;
-}
-
-/* =========================
-   TABLE
-========================= */
-table {
-  width: 100%;
-  min-width: 620px;
-  border-collapse: collapse;
-  background: #fff;
-}
-
-thead {
-  background: #111;
-  color: #fff;
-}
-
-th, td {
-  padding: 12px;
-  border: 1px solid #ddd;
-  text-align: left;
-}
-
-th {
-  font-weight: 600;
-}
-
-td input,
-td select {
-  width: 100%;
-  padding: 8px 10px;
-  font-size: 0.95rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  outline: none;
-}
-
-td input:focus,
-td select:focus {
-  border-color: #111;
-}
-
-/* =========================
-   BUTTONS
-========================= */
-.buttons {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
-  margin-bottom: 24px;
+input, select, button {
+width: 100%;
+padding: 10px;
+margin: 5px 0;
+font-size: 16px;
 }
 
 button {
-  flex: 1;
-  padding: 12px;
-  font-size: 1rem;
-  font-weight: 600;
-  border: 1px solid #111;
-  background: #111;
-  color: #fff;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
+background: #007bff;
+color: white;
+border: none;
+border-radius: 6px;
+cursor: pointer;
 }
 
 button:hover {
-  background: #fff;
-  color: #111;
+opacity: 0.9;
 }
 
-/* =========================
-   RESULTS
-========================= */
+.danger {
+background: #dc3545;
+}
+
+.toggle-box {
+display: flex;
+align-items: center;
+gap: 10px;
+margin: 10px 0;
+}
+
+.switch {
+position: relative;
+width: 45px;
+height: 24px;
+}
+
+.switch input {
+display: none;
+}
+
+.slider {
+position: absolute;
+cursor: pointer;
+background: #ccc;
+border-radius: 24px;
+width: 100%;
+height: 100%;
+}
+
+.slider:before {
+content: "";
+position: absolute;
+height: 18px;
+width: 18px;
+left: 3px;
+top: 3px;
+background: white;
+border-radius: 50%;
+transition: 0.3s;
+}
+
+input:checked + .slider {
+background: #007bff;
+}
+
+input:checked + .slider:before {
+transform: translateX(20px);
+}
+
+.table-wrapper {
+overflow-x: auto;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+min-width: 500px;
+}
+
+th, td {
+border: 1px solid #ccc;
+padding: 8px;
+text-align: center;
+}
+
 .results {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
+margin-top: 10px;
+font-weight: bold;
 }
 
-.results p {
-  padding: 14px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background: #f9f9f9;
-  font-weight: 600;
+.hidden {
+display: none;
 }
 
-/* =========================
-   PRINT SECTION
-========================= */
-.print-section {
-  margin-top: 24px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
+.legend {
+margin-top: 10px;
+font-size: 14px;
 }
 
-.print-inputs {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
+footer {
+text-align: center;
+margin-top: 20px;
+font-size: 13px;
 }
 
-.print-inputs input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+/* Mobile tweaks */
+@media (max-width: 600px) {
+table {
+min-width: 100%;
 }
-
-/* =========================
-   THANK YOU
-========================= */
-.thanks {
-  text-align: center;
-  margin-top: 32px;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-/* =========================
-   MOBILE OPTIMIZATION
-========================= */
-@media (max-width: 768px) {
-
-  h1 {
-    font-size: 1.7rem;
-  }
-
-  .buttons {
-    flex-direction: column;
-  }
-
-  .print-inputs {
-    flex-direction: column;
-  }
-
 }
