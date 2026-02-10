@@ -1,3 +1,10 @@
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 /* ===== ROOT THEME ===== */
 :root {
     --black: #000000;
@@ -8,22 +15,23 @@
     --white: #ffffff;
 }
 
-/* ===== GLOBAL ===== */
-* {
-    box-sizing: border-box;
-}
-
+/* ===== BODY ===== */
 body {
-    margin: 0;
+    min-height: 100vh;
     background: var(--bg);
     font-family: "Inter", "Segoe UI", sans-serif;
     color: var(--dark);
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* 🔥 IMPORTANT: prevents half-screen gap */
 }
 
 /* ===== CONTAINER ===== */
 .container {
+    width: 100%;
     max-width: 1000px;
-    margin: 50px auto;
+    margin: 30px 15px;
     padding: 40px;
     background: var(--white);
     border-radius: 18px;
@@ -61,10 +69,10 @@ h1 {
 
 .slider {
     position: absolute;
-    cursor: pointer;
+    inset: 0;
     background: #ccc;
     border-radius: 30px;
-    inset: 0;
+    cursor: pointer;
     transition: 0.3s;
 }
 
@@ -89,7 +97,8 @@ h1 {
 }
 
 /* ===== INPUTS ===== */
-input, select {
+input,
+select {
     width: 100%;
     padding: 12px 14px;
     border-radius: 10px;
@@ -99,7 +108,8 @@ input, select {
     transition: 0.25s;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
     outline: none;
     border-color: var(--black);
     box-shadow: 0 0 0 2px rgba(0,0,0,0.08);
