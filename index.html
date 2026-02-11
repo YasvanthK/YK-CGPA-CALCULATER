@@ -1,94 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>YK's CGPA Calculator</title>
+  <meta charset="UTF-8">
+  <title>YK's CGPA Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="YK's CGPA Calculator - Calculate SGPA & CGPA with PDF">
+  <meta name="author" content="Yasvanth K">
+  <meta name="google-site-verification" content="MYZ-ZEnQbejhTgj3Tdv_4UW56Jh6p8INaeP_SVhXID8" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="google-site-verification" content="MYZ-ZEnQbejhTgj3Tdv_4UW56Jh6p8INaeP_SVhXID8" />
-<meta name="description" content="YK's CGPA Calculator with SGPA, CGPA and PDF download">
-<meta name="author" content="Yasvanth K">
+  <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet" href="style.css">
-
-<!-- jsPDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 </head>
-
 <body>
 
 <div class="container">
 
-<header>
-<h1>YK's CGPA Calculator</h1>
-<button class="dark-btn" onclick="toggleDark()">🌙</button>
-</header>
+  <!-- Header -->
+  <h1>YK's CGPA Calculator</h1>
 
-<!-- Previous CGPA -->
-<div class="toggle-box">
-<label class="switch">
-<input type="checkbox" id="prevToggle" onchange="togglePrevious()">
-<span class="slider"></span>
-</label>
-<span>Include Previous CGPA</span>
-</div>
+  <!-- Optional Previous CGPA -->
+  <div class="previous-section">
+    <label>
+      <input type="checkbox" id="prevToggle" onchange="togglePrevious()"> Include Previous CGPA
+    </label>
+    <div id="previousInputs" class="hidden">
+      <input type="number" id="prevCgpa" placeholder="Previous CGPA" step="0.01">
+      <input type="number" id="prevCredits" placeholder="Previous Credits">
+    </div>
+  </div>
 
-<div id="previousSection" class="hidden">
-<input type="number" id="prevCgpa" placeholder="Previous CGPA">
-<input type="number" id="prevCredits" placeholder="Previous Credits">
-</div>
+  <!-- Subjects Table -->
+  <div class="table-wrapper">
+    <table class="cgpa-table">
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Credits</th>
+          <th>Grade</th>
+        </tr>
+      </thead>
+      <tbody id="subjectTable"></tbody>
+    </table>
+  </div>
 
-<!-- Table -->
-<div class="table-wrapper">
-<table class="cgpa-table">
-<thead>
-<tr>
-<th>Subject</th>
-<th>Credits</th>
-<th>Grade</th>
-</tr>
-</thead>
-<tbody id="subjectTable"></tbody>
-</table>
-</div>
+  <!-- Buttons -->
+  <div class="buttons">
+    <button onclick="addRow()">➕ Add Subject</button>
+    <button onclick="calculate()">📊 Calculate</button>
+    <button class="danger" onclick="clearAll()">🗑 Clear</button>
+  </div>
 
-<!-- Buttons -->
-<div class="buttons">
-<button onclick="addRow()">➕ Add Subject</button>
-<button onclick="calculate()">📊 Calculate</button>
-<button class="danger" onclick="clearAll()">🗑 Clear</button>
-</div>
+  <!-- Results -->
+  <div class="results">
+    <p id="sgpa"></p>
+    <p id="cgpa"></p>
+    <p id="totalCredits"></p>
+  </div>
 
-<!-- Results -->
-<div class="results">
-<p id="sgpa"></p>
-<p id="cgpa"></p>
-<p id="totalCredits"></p>
-</div>
+  <!-- PDF Section -->
+  <div id="printSection" class="hidden">
+    <h3>Student Details</h3>
+    <input type="text" id="studentName" placeholder="Name">
+    <input type="text" id="rollNo" placeholder="Roll No">
+    <input type="text" id="collegeName" placeholder="College Name">
+    <button onclick="printPDF()">📄 Download PDF</button>
+  </div>
 
-<!-- Print -->
-<div id="printSection" class="hidden">
-<h3>Student Details</h3>
-<input type="text" id="studentName" placeholder="Name">
-<input type="text" id="rollNo" placeholder="Roll No">
-<input type="text" id="collegeName" placeholder="College Name">
-<button onclick="printPDF()">📄 Download PDF</button>
-</div>
-
-<!-- Grade Info -->
-<div class="legend">
-<strong>Grade Points:</strong>
-O-10 | A+-9 | A-8 | B+-7 | B-6 | C-5 | U-0
-</div>
-
-<footer>
-<p>© 2026 YK's CGPA Calculator</p>
-</footer>
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 YK's CGPA Calculator</p>
+  </footer>
 
 </div>
 
 <script src="script.js"></script>
 </body>
 </html>
-
