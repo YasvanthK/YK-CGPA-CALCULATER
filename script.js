@@ -81,13 +81,17 @@ function printPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // TITLE
+    // PDF TITLE
     doc.setFontSize(16);
     doc.text("YK's CGPA Calculator", 105, 15, { align: "center" });
 
+    // DATE
+    doc.setFontSize(11);
+    doc.text(`Date: ${new Date().toLocaleDateString()}`, 160, 25, { align: "right" });
+
     // STUDENT DETAILS TABLE
     doc.autoTable({
-        startY: 25,
+        startY: 30,
         theme: "grid",
         styles: { fontSize: 11 },
         body: [
@@ -115,7 +119,7 @@ function printPDF() {
         styles: { fontSize: 11 }
     });
 
-    // SUMMARY TABLE
+    // SUMMARY TABLE (SGPA / CGPA / Total Credits)
     const summary = [
         ["SGPA", SGPA],
         ["Total Credits", TOTAL_CREDITS]
@@ -129,10 +133,41 @@ function printPDF() {
         body: summary
     });
 
-    // FOOTER
+    // GRADE LEGEND TABLE (centered and shorter)
+    const gradeLegend = [
+        ["Grade", "Points"],
+        ["O", "10"],
+        ["A+", "9"],
+        ["A", "8"],
+        ["B+", "7"],
+        ["B", "6"],
+        ["C", "5"],
+        ["U", "0"]
+    ];
+
+    const pageWidth = doc.internal.pageSize.width;
+    const legendWidth = 60; // width of the legend table
+
+    doc.autoTable({
+        startY: doc.lastAutoTable.finalY + 10,
+        head: [gradeLegend[0]],
+        body: gradeLegend.slice(1),
+        theme: "grid",
+        styles: { fontSize: 10 },
+        margin: { left: (pageWidth - legendWidth) / 2 }, // center it
+        tableWidth: legendWidth
+    });
+
+    // FOOTER NOTE
     doc.setFontSize(10);
     doc.text(
-        "Thanks for using YK's CGPA Calculator",
+        "This report is generated using YK's CGPA Calculator. Verify results with official records if required.",
+        105,
+        doc.internal.pageSize.height - 15,
+        { align: "center" }
+    );
+    doc.text(
+        "Thanks for using YK's CGPA Calculator 🙏",
         105,
         doc.internal.pageSize.height - 10,
         { align: "center" }
@@ -142,6 +177,8 @@ function printPDF() {
     const fileName = `${name.replace(/\s+/g, "_")}_CGPA_Report.pdf`;
     doc.save(fileName);
 }
+
+
 
 
 
