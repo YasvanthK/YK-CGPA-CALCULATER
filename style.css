@@ -118,6 +118,15 @@ input:focus, select:focus {
 }
 
 /* ===== TABLE ===== */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-wrapper table {
+  min-width: 100%;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -216,17 +225,27 @@ button:hover {
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-    .previous,
-    .results,
-    .print-inputs {
-        grid-template-columns: 1fr;
-    }
-
-    .buttons {
-        flex-direction: column;
-    }
+@media (max-width: 480px) {
+  .previous, .results, .print-inputs {
+    grid-template-columns: 1fr !important;
+  }
+  .buttons {
+    flex-direction: column !important;
+    gap: 12px;
+  }
+  input, select, button {
+    font-size: 13px;
+    padding: 10px;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  .results p {
+    font-size: 14px;
+    padding: 16px;
+  }
 }
+
 /* =========================
    FOOTER
 ========================= */
@@ -266,3 +285,4 @@ button:hover {
   line-height: 1.6;
   text-align: justify;
 }
+
