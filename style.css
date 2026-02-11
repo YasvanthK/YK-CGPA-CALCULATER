@@ -330,6 +330,20 @@ button:hover {
         min-width: 600px;
     }
 }
+/* Fix grade dropdown text visibility */
+select {
+    color: #000 !important;
+    background-color: #fff !important;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* Fix option color */
+select option {
+    color: #000;
+}
+
 
 
 
