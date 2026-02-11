@@ -178,12 +178,7 @@ function printPDF() {
     // FOOTER
     const footerY = doc.internal.pageSize.height - 15;
     doc.setFontSize(10);
-    doc.text(
-        "This report is generated using YK's CGPA Calculator. Verify results with official records if required.",
-        105,
-        footerY - 14,
-        { align: "center" }
-    );
+    
     doc.text("Thanks for using YK's CGPA Calculator ", 105, footerY , { align: "center" });
     doc.text("© 2026 YK's CGPA Calculator. All rights reserved.", 105, footerY, { align: "center" });
 
@@ -191,4 +186,5 @@ function printPDF() {
     const fileName = `${name.replace(/\s+/g, "_")}_CGPA_Report.pdf`;
     doc.save(fileName);
 }
+
 
