@@ -18,7 +18,15 @@ function addRow() {
     `;
     document.getElementById("subjectTable").appendChild(row);
 }
-
+function removeLastRow() {
+    const table = document.getElementById("subjectTable");
+    const rows = table.querySelectorAll("tr");
+    if (rows.length > 1) {
+        table.removeChild(rows[rows.length - 1]);
+    } else {
+        alert("At least one subject must remain!");
+    }
+}
 function togglePrevious() {
     document.getElementById("previousSection").classList.toggle("hidden");
 }
@@ -175,6 +183,7 @@ function printPDF() {
     const fileName = `${name.replace(/\s+/g, "_")}_CGPA_Report.pdf`;
     doc.save(fileName);
 }
+
 
 
 
