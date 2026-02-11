@@ -1,114 +1,142 @@
-const table = document.getElementById("subjectTable");
-const prevCgpaInput = document.getElementById("prevCgpa");
-const prevCreditsInput = document.getElementById("prevCredits");
-
-// Add initial row
-addRow();
-
 function addRow() {
-  const row = document.createElement("tr");
-  row.innerHTML = `
-    <td><input type="text" placeholder="Subject"></td>
-    <td><input type="number" min="1" placeholder="Credits"></td>
-    <td>
-      <select>
-        <option value="">Grade</option>
-        <option value="10">O</option>
-        <option value="9">A+</option>
-        <option value="8">A</option>
-        <option value="7">B+</option>
-        <option value="6">B</option>
-        <option value="5">C</option>
-        <option value="0">U</option>
-      </select>
-    </td>`;
-  table.appendChild(row);
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td><input type="text" placeholder="Subject"></td>
+        <td><input type="number" min="1" placeholder="Credits"></td>
+        <td>
+            <select>
+                <option value="">Grade</option>
+                <option value="10">O</option>
+                <option value="9">A+</option>
+                <option value="8">A</option>
+                <option value="7">B+</option>
+                <option value="6">B</option>
+                <option value="5">C</option>
+                <option value="0">U</option>
+            </select>
+        </td>
+    `;
+    document.getElementById("subjectTable").appendChild(row);
 }
 
 function togglePrevious() {
-  document.getElementById("previousInputs").classList.toggle("hidden");
+    document.getElementById("previousSection").classList.toggle("hidden");
 }
+
+let SGPA = 0, CGPA = "", TOTAL_CREDITS = 0;
 
 function calculate() {
-  let totalCredits = 0;
-  let totalPoints = 0;
+    const rows = document.querySelectorAll("#subjectTable tr");
 
-  [...table.rows].forEach(row => {
-    const credits = Number(row.cells[1].querySelector("input").value);
-    const grade = Number(row.cells[2].querySelector("select").value);
-    if (credits && grade) {
-      totalCredits += credits;
-      totalPoints += credits * grade;
+    let points = 0;
+    let credits = 0;
+
+    rows.forEach(r => {
+        const c = parseFloat(r.children[1].querySelector("input").value);
+        const g = parseFloat(r.children[2].querySelector("select").value);
+
+        if (!isNaN(c) && !isNaN(g)) {
+            credits += c;
+            points += c * g;
+        }
+    });
+
+    if (credits === 0) return;
+
+    SGPA = (points / credits).toFixed(2);
+    TOTAL_CREDITS = credits;
+
+    document.getElementById("sgpa").innerText = `SGPA : ${SGPA}`;
+    document.getElementById("totalCredits").innerText = `Total Credits : ${TOTAL_CREDITS}`;
+
+    CGPA = "";
+
+    if (prevToggle.checked) {
+        const pc = parseFloat(prevCredits.value);
+        const pg = parseFloat(prevCgpa.value);
+        if (!isNaN(pc) && !isNaN(pg)) {
+            CGPA = ((points + pg * pc) / (credits + pc)).toFixed(2);
+            TOTAL_CREDITS += pc;
+            document.getElementById("cgpa").innerText = `CGPA : ${CGPA}`;
+            document.getElementById("totalCredits").innerText =
+                `Total Credits : ${TOTAL_CREDITS}`;
+        }
+    } else {
+        document.getElementById("cgpa").innerText = "";
     }
-  });
 
-  if (!totalCredits) return alert("Enter valid data!");
-
-  let sgpa = (totalPoints / totalCredits).toFixed(2);
-  let cgpa = sgpa;
-
-  if (document.getElementById("prevToggle").checked) {
-    const prevCredits = Number(prevCreditsInput.value);
-    const prevCgpa = Number(prevCgpaInput.value);
-    if (prevCredits && prevCgpa) {
-      cgpa = ((totalPoints + prevCgpa * prevCredits) / (totalCredits + prevCredits)).toFixed(2);
-    }
-  }
-
-  document.getElementById("sgpa").innerText = `SGPA: ${sgpa}`;
-  document.getElementById("cgpa").innerText = `CGPA: ${cgpa}`;
-  document.getElementById("totalCredits").innerText = `Total Credits: ${totalCredits}`;
-  document.getElementById("printSection").classList.remove("hidden");
-}
-
-function clearAll() {
-  table.innerHTML = "";
-  addRow();
-  document.querySelector(".results").innerHTML = "";
-  document.getElementById("printSection").classList.add("hidden");
+    document.getElementById("printSection").classList.remove("hidden");
 }
 
 function printPDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  const name = document.getElementById("studentName").value || "N/A";
-  const roll = document.getElementById("rollNo").value || "N/A";
-  const college = document.getElementById("collegeName").value || "N/A";
+    const name = studentName.value;
+    const roll = rollNo.value;
+    const college = collegeName.value;
 
-  doc.setFontSize(16);
-  doc.text("YK's CGPA Calculator", 14, 15);
-  doc.setFontSize(12);
-  doc.text(`Name: ${name}`, 14, 25);
-  doc.text(`Roll No: ${roll}`, 14, 32);
-  doc.text(`College: ${college}`, 14, 39);
+    if (!name || !roll || !college) {
+        alert("Please fill student details!");
+        return;
+    }
 
-  const tableData = [];
-  [...table.rows].forEach(row => {
-    const subject = row.cells[0].querySelector("input").value || "-";
-    const credits = row.cells[1].querySelector("input").value || "-";
-    const grade = row.cells[2].querySelector("select").value || "-";
-    tableData.push([subject, credits, grade]);
-  });
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-  doc.autoTable({
-    head: [['Subject', 'Credits', 'Grade']],
-    body: tableData,
-    startY: 45,
-    theme: 'grid',
-    styles: { cellPadding: 2, fontSize: 11 },
-    headStyles: { fillColor: [0,0,0], textColor: [255,255,255] },
-    bodyStyles: { textColor: [0,0,0] }
-  });
+    // TITLE
+    doc.setFontSize(16);
+    doc.text("YK's CGPA Calculator", 105, 15, { align: "center" });
 
-  const y = doc.lastAutoTable.finalY + 10;
-  const sgpa = document.getElementById("sgpa").innerText;
-  const cgpa = document.getElementById("cgpa").innerText;
-  const total = document.getElementById("totalCredits").innerText;
+    // STUDENT DETAILS TABLE
+    doc.autoTable({
+        startY: 25,
+        theme: "grid",
+        styles: { fontSize: 11 },
+        body: [
+            ["Name", name],
+            ["Roll No", roll],
+            ["College", college]
+        ]
+    });
 
-  doc.text(`${sgpa}`, 14, y);
-  doc.text(`${cgpa}`, 14, y + 7);
-  doc.text(`${total}`, 14, y + 14);
-  doc.text("Thanks for using YK's CGPA Calculator 🙏", 14, y + 24);
+    // SUBJECT TABLE
+    const subjectData = [];
+    document.querySelectorAll("#subjectTable tr").forEach(r => {
+        subjectData.push([
+            r.children[0].querySelector("input").value || "-",
+            r.children[1].querySelector("input").value || "-",
+            r.children[2].querySelector("select").selectedOptions[0].text || "-"
+        ]);
+    });
 
-  doc.save("CGPA_Report.pdf");
+    doc.autoTable({
+        startY: doc.lastAutoTable.finalY + 10,
+        head: [["Subject", "Credits", "Grade"]],
+        body: subjectData,
+        theme: "grid",
+        styles: { fontSize: 11 }
+    });
+
+    // SUMMARY TABLE
+    const summary = [
+        ["SGPA", SGPA],
+        ["Total Credits", TOTAL_CREDITS]
+    ];
+    if (CGPA) summary.splice(1, 0, ["CGPA", CGPA]);
+
+    doc.autoTable({
+        startY: doc.lastAutoTable.finalY + 10,
+        theme: "grid",
+        styles: { fontSize: 11 },
+        body: summary
+    });
+
+    // FOOTER
+    doc.setFontSize(10);
+    doc.text(
+        "Thanks for using YK's CGPA Calculator",
+        105,
+        doc.internal.pageSize.height - 10,
+        { align: "center" }
+    );
+
+    doc.save("YK_CGPA_Report.pdf");
 }
