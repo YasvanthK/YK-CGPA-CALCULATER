@@ -226,24 +226,58 @@ button:hover {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 480px) {
-  .previous, .results, .print-inputs {
-    grid-template-columns: 1fr !important;
-  }
-  .buttons {
-    flex-direction: column !important;
-    gap: 12px;
-  }
-  input, select, button {
-    font-size: 13px;
-    padding: 10px;
-  }
-  h1 {
-    font-size: 24px;
-  }
-  .results p {
-    font-size: 14px;
-    padding: 16px;
-  }
+    .container {
+        transform: scale(1.1); /* zoom in 10% */
+        transform-origin: top center;
+    }
+}
+
+/* ===== MOBILE VIEW (phones) ===== */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px; /* increase base font */
+    }
+
+    .container {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 28px; /* slightly smaller than desktop but readable */
+    }
+
+    input, select, button {
+        font-size: 16px; /* bigger inputs and buttons */
+        padding: 14px 18px;
+    }
+
+    table {
+        font-size: 14px; /* bigger table text */
+    }
+
+    tbody td input, tbody td select {
+        font-size: 14px;
+    }
+
+    .results p {
+        font-size: 16px;
+        padding: 20px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .about-section {
+        font-size: 15px;
+        padding: 20px;
+    }
+
+    .print-section .print-inputs {
+        grid-template-columns: 1fr; /* inputs stacked */
+    }
 }
 
 /* =========================
@@ -285,4 +319,5 @@ button:hover {
   line-height: 1.6;
   text-align: justify;
 }
+
 
