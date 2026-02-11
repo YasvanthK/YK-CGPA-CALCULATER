@@ -132,27 +132,26 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 25px;
-     /* Important */
 }
 
-/* Make columns equal and controlled */
-th, td {
-    padding: 10px;
+thead th {
+    background: var(--dark);
+    color: var(--white);
+    padding: 16px;
+    font-size: 14px;
     text-align: center;
-    word-wrap: break-word;
 }
 
-/* Prevent overflow */
+tbody td {
+    border-bottom: 1px solid var(--border);
+    padding: 12px;
+}
+
 tbody td input,
 tbody td select {
-    width: 100%;
-    min-width: 0;
+    text-align: center;
 }
 
-/* Prevent table from stretching */
-.container {
-    overflow-x: hidden;
-}
 
 /* ===== BUTTONS ===== */
 .buttons {
@@ -316,6 +315,7 @@ button:hover {
     width: 100%;
     overflow-x: auto;
 }
+
 
 
 
