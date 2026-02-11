@@ -227,3 +227,44 @@ button:hover {
         flex-direction: column;
     }
 }
+/* =========================
+   FOOTER
+========================= */
+.footer {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid #000;
+  color: #555;
+  line-height: 1.5;
+}
+
+.footer p {
+  margin: 4px 0;
+}
+/* =========================
+   ABOUT SECTION
+========================= */
+.about-section {
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  background: #f9f9f9;
+}
+
+.about-section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.about-section p {
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+
