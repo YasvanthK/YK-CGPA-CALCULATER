@@ -166,17 +166,16 @@ function printPDF() {
         doc.internal.pageSize.height - 15,
         { align: "center" }
     );
-    doc.text(
-        "Thanks for using YK's CGPA Calculator 🙏",
-        105,
-        doc.internal.pageSize.height - 10,
-        { align: "center" }
-    );
+   const footerY = doc.internal.pageSize.height - 15;
+    doc.setFontSize(10);
+    doc.text("Thanks for using YK's CGPA Calculator ", 105, footerY - 7, { align: "center" });
+    doc.text("© 2026 YK's CGPA Calculator. All rights reserved.", 105, footerY, { align: "center" });
 
     // Save PDF with student name as filename
     const fileName = `${name.replace(/\s+/g, "_")}_CGPA_Report.pdf`;
     doc.save(fileName);
 }
+
 
 
 
