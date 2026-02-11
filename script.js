@@ -69,64 +69,81 @@ function calculate() {
 }
 
 function printPDF() {
+    const name = studentName.value.trim() || "Student";
+    const roll = rollNo.value.trim() || "N/A";
+    const college = collegeName.value.trim() || "N/A";
+
+    if (!name || !roll || !college) {
+        alert("Please fill student details!");
+        return;
+    }
+
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Get student details
-    const name = document.getElementById("studentName").value.trim() || "Student";
-    const roll = document.getElementById("rollNo").value.trim() || "N/A";
-    const college = document.getElementById("collegeName").value.trim() || "N/A";
-
-    // PDF Title
+    // TITLE
     doc.setFontSize(16);
-    doc.text("YK's CGPA Calculator", 14, 15);
+    doc.text("YK's CGPA Calculator", 105, 15, { align: "center" });
 
-    // Student details
-    doc.setFontSize(12);
-    doc.text(`Name: ${name}`, 14, 25);
-    doc.text(`Roll No: ${roll}`, 14, 32);
-    doc.text(`College: ${college}`, 14, 39);
-
-    // Prepare table data from tbody
-    const tbody = document.getElementById("subjectTable");
-    const tableData = [];
-
-    for (let i = 0; i < tbody.rows.length; i++) {
-        const row = tbody.rows[i];
-        const subject = row.cells[0].querySelector("input").value || "-";
-        const credits = row.cells[1].querySelector("input").value || "-";
-        const gradeIndex = row.cells[2].querySelector("select").selectedIndex;
-        const grade = gradeIndex > 0 ? row.cells[2].querySelector("select").options[gradeIndex].text : "-";
-
-        tableData.push([subject, credits, grade]);
-    }
-
-    // Add table to PDF
+    // STUDENT DETAILS TABLE
     doc.autoTable({
-        head: [['Subject', 'Credits', 'Grade']],
-        body: tableData,
-        startY: 45,
-        theme: 'grid',
-        styles: { cellPadding: 2, fontSize: 11 },
-        headStyles: { fillColor: [0, 0, 0], textColor: [255, 255, 255] },
-        bodyStyles: { textColor: [0, 0, 0] }
+        startY: 25,
+        theme: "grid",
+        styles: { fontSize: 11 },
+        body: [
+            ["Name", name],
+            ["Roll No", roll],
+            ["College", college]
+        ]
     });
 
-    // Add results
-    const y = doc.lastAutoTable.finalY + 10;
-    const sgpa = document.getElementById("sgpa").innerText || "";
-    const cgpa = document.getElementById("cgpa").innerText || "";
-    const total = document.getElementById("totalCredits").innerText || "";
+    // SUBJECT TABLE
+    const subjectData = [];
+    document.querySelectorAll("#subjectTable tr").forEach(r => {
+        subjectData.push([
+            r.children[0].querySelector("input").value || "-",
+            r.children[1].querySelector("input").value || "-",
+            r.children[2].querySelector("select").selectedOptions[0].text || "-"
+        ]);
+    });
 
-    doc.text(`${sgpa}`, 14, y);
-    doc.text(`${cgpa}`, 14, y + 7);
-    doc.text(`${total}`, 14, y + 14);
-    doc.text("Thanks for using YK's CGPA Calculator", 14, y + 24);
+    doc.autoTable({
+        startY: doc.lastAutoTable.finalY + 10,
+        head: [["Subject", "Credits", "Grade"]],
+        body: subjectData,
+        theme: "grid",
+        styles: { fontSize: 11 }
+    });
+
+    // SUMMARY TABLE
+    const summary = [
+        ["SGPA", SGPA],
+        ["Total Credits", TOTAL_CREDITS]
+    ];
+    if (CGPA) summary.splice(1, 0, ["CGPA", CGPA]);
+
+    doc.autoTable({
+        startY: doc.lastAutoTable.finalY + 10,
+        theme: "grid",
+        styles: { fontSize: 11 },
+        body: summary
+    });
+
+    // FOOTER
+    doc.setFontSize(10);
+    doc.text(
+        "Thanks for using YK's CGPA Calculator",
+        105,
+        doc.internal.pageSize.height - 10,
+        { align: "center" }
+    );
 
     // Save PDF with student name as filename
-    const fileName = `${name.replace(/\s+/g, "_")}_YK'SCGPA_Report.pdf`;
+    const fileName = `${name.replace(/\s+/g, "_")}_CGPA_Report.pdf`;
     doc.save(fileName);
 }
+
+
 
 
 
