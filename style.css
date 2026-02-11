@@ -319,5 +319,17 @@ button:hover {
   line-height: 1.6;
   text-align: justify;
 }
+/* Mobile Table Fix */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+    table {
+        min-width: 600px;
+    }
+}
+
 
 
