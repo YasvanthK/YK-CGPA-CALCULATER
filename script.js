@@ -18,6 +18,7 @@ function addRow() {
     `;
     document.getElementById("subjectTable").appendChild(row);
 }
+
 function removeLastRow() {
     const table = document.getElementById("subjectTable");
     const rows = table.querySelectorAll("tr");
@@ -27,6 +28,7 @@ function removeLastRow() {
         alert("At least one subject must remain!");
     }
 }
+
 function togglePrevious() {
     document.getElementById("previousSection").classList.toggle("hidden");
 }
@@ -59,15 +61,18 @@ function calculate() {
 
     CGPA = "";
 
-    if (prevToggle.checked) {
-        const pc = parseFloat(prevCredits.value);
-        const pg = parseFloat(prevCgpa.value);
+    const prevToggleEl = document.getElementById("prevToggle");
+    const prevCgpaEl = document.getElementById("prevCgpa");
+    const prevCreditsEl = document.getElementById("prevCredits");
+
+    if (prevToggleEl.checked) {
+        const pc = parseFloat(prevCreditsEl.value);
+        const pg = parseFloat(prevCgpaEl.value);
         if (!isNaN(pc) && !isNaN(pg)) {
             CGPA = ((points + pg * pc) / (credits + pc)).toFixed(2);
             TOTAL_CREDITS += pc;
             document.getElementById("cgpa").innerText = `CGPA : ${CGPA}`;
-            document.getElementById("totalCredits").innerText =
-                `Total Credits : ${TOTAL_CREDITS}`;
+            document.getElementById("totalCredits").innerText = `Total Credits : ${TOTAL_CREDITS}`;
         }
     } else {
         document.getElementById("cgpa").innerText = "";
@@ -77,9 +82,13 @@ function calculate() {
 }
 
 function printPDF() {
-    const name = studentName.value.trim() || "Student";
-    const roll = rollNo.value.trim() || "N/A";
-    const college = collegeName.value.trim() || "N/A";
+    const studentNameEl = document.getElementById("studentName");
+    const rollNoEl = document.getElementById("rollNo");
+    const collegeNameEl = document.getElementById("collegeName");
+
+    const name = studentNameEl.value.trim() || "Student";
+    const roll = rollNoEl.value.trim() || "N/A";
+    const college = collegeNameEl.value.trim() || "N/A";
 
     if (!name || !roll || !college) {
         alert("Please fill student details!");
@@ -89,7 +98,7 @@ function printPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // PDF TITLE
+    // TITLE
     doc.setFontSize(16);
     doc.text("YK's CGPA Calculator", 105, 15, { align: "center" });
 
@@ -127,7 +136,7 @@ function printPDF() {
         styles: { fontSize: 11 }
     });
 
-    // SUMMARY TABLE (SGPA / CGPA / Total Credits)
+    // SUMMARY TABLE
     const summary = [
         ["SGPA", SGPA],
         ["Total Credits", TOTAL_CREDITS]
@@ -141,7 +150,7 @@ function printPDF() {
         body: summary
     });
 
-    // GRADE LEGEND TABLE (centered and shorter)
+    // GRADE LEGEND TABLE
     const gradeLegend = [
         ["Grade", "Points"],
         ["O", "10"],
@@ -154,7 +163,7 @@ function printPDF() {
     ];
 
     const pageWidth = doc.internal.pageSize.width;
-    const legendWidth = 60; // width of the legend table
+    const legendWidth = 60;
 
     doc.autoTable({
         startY: doc.lastAutoTable.finalY + 10,
@@ -162,37 +171,23 @@ function printPDF() {
         body: gradeLegend.slice(1),
         theme: "grid",
         styles: { fontSize: 10 },
-        margin: { left: (pageWidth - legendWidth) / 2 }, // center it
+        margin: { left: (pageWidth - legendWidth) / 2 },
         tableWidth: legendWidth
     });
 
-    // FOOTER NOTE
+    // FOOTER
+    const footerY = doc.internal.pageSize.height - 15;
     doc.setFontSize(10);
-   
-    );
-   const footerY = doc.internal.pageSize.height - 15;
-    doc.setFontSize(10);
-    doc.text("This report is generated using YK's CGPA Calculator. Verify results with official records if required.",
+    doc.text(
+        "This report is generated using YK's CGPA Calculator. Verify results with official records if required.",
         105,
-        doc.internal.pageSize.height - 15,
+        footerY - 14,
         { align: "center" }
-    doc.text("Thanks for using YK's CGPA Calculator ", 105, footerY - 7, { align: "center" });
+    );
+    doc.text("Thanks for using YK's CGPA Calculator 🙏", 105, footerY - 7, { align: "center" });
     doc.text("© 2026 YK's CGPA Calculator. All rights reserved.", 105, footerY, { align: "center" });
 
-    // Save PDF with student name as filename
+    // SAVE PDF
     const fileName = `${name.replace(/\s+/g, "_")}_CGPA_Report.pdf`;
     doc.save(fileName);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
