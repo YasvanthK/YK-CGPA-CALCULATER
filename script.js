@@ -87,30 +87,34 @@ function printPDF() {
   doc.text(`Roll No: ${roll}`, 14, 32);
   doc.text(`College: ${college}`, 14, 39);
 
-  // Table data
+  // Select table rows
+  const table = document.getElementById("subjectTable");
   const tableData = [];
-  [...table.rows].forEach(row => {
+
+  for (let i = 0; i < table.rows.length; i++) {
+    const row = table.rows[i];
     const subject = row.cells[0].querySelector("input").value || "-";
     const credits = row.cells[1].querySelector("input").value || "-";
     const grade = row.cells[2].querySelector("select").value || "-";
     tableData.push([subject, credits, grade]);
-  });
+  }
 
+  // Add table to PDF
   doc.autoTable({
     head: [['Subject', 'Credits', 'Grade']],
     body: tableData,
     startY: 45,
     theme: 'grid',
     styles: { cellPadding: 2, fontSize: 11 },
-    headStyles: { fillColor: [0,0,0], textColor: [255,255,255] },
-    bodyStyles: { textColor: [0,0,0] }
+    headStyles: { fillColor: [0, 0, 0], textColor: [255, 255, 255] },
+    bodyStyles: { textColor: [0, 0, 0] }
   });
 
-  // Add results
+  // Add results below table
   const y = doc.lastAutoTable.finalY + 10;
-  const sgpa = document.getElementById("sgpa").innerText;
-  const cgpa = document.getElementById("cgpa").innerText;
-  const total = document.getElementById("totalCredits").innerText;
+  const sgpa = document.getElementById("sgpa").innerText || "";
+  const cgpa = document.getElementById("cgpa").innerText || "";
+  const total = document.getElementById("totalCredits").innerText || "";
 
   doc.text(`${sgpa}`, 14, y);
   doc.text(`${cgpa}`, 14, y + 7);
@@ -121,5 +125,7 @@ function printPDF() {
   const fileName = `${name.replace(/\s+/g, "_")}_CGPA_Report.pdf`;
   doc.save(fileName);
 }
+
+
 
 
