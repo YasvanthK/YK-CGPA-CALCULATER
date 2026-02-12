@@ -100,7 +100,14 @@ function printPDF() {
 
     // TITLE
     doc.setFontSize(16);
-    doc.text("YK's CGPA Calculator", 105, 15, { align: "center" });
+    doc.text("YK CGPA Calculator", 105, 15, { align: "center" });
+    // TAGLINE
+   doc.setFontSize(10);
+   doc.setTextColor(120); // grey color for premium look
+   doc.text("Your Grades. Your Growth.", 105, 22, { align: "center" });
+
+  // Reset text color back to black after tagline
+  doc.setTextColor(0);
 
     // DATE
     doc.setFontSize(11);
@@ -179,12 +186,13 @@ function printPDF() {
     const footerY = doc.internal.pageSize.height - 15;
     doc.setFontSize(10);
     
-    doc.text("Thanks for using YK's CGPA Calculator ", 105, footerY , { align: "center" });
-    doc.text("© 2026 YK's CGPA Calculator. All rights reserved.", 105, footerY, { align: "center" });
+    
+    doc.text("© 2026 YK CGPA Calculator. All rights reserved.", 105, footerY, { align: "center" });
 
     // SAVE PDF
     const fileName = `${name.replace(/\s+/g, "_")}_CGPA_Report.pdf`;
     doc.save(fileName);
 }
+
 
 
