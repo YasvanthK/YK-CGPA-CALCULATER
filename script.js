@@ -86,7 +86,7 @@ function printPDF() {
     const rollNoEl = document.getElementById("rollNo");
     const collegeNameEl = document.getElementById("collegeName");
 
-    const name = studentNameEl.value.trim() || "Student";
+    const name = studentNameEl.value.trim() || "-";
     const roll = rollNoEl.value.trim() || "N/A";
     const college = collegeNameEl.value.trim() || "N/A";
 
@@ -105,6 +105,7 @@ function printPDF() {
    doc.setFontSize(10);
    doc.setTextColor(120); // grey color for premium look
    doc.text("Your Grades. Your Growth.", 105, 22, { align: "center" });
+   doc.text("", 105, 22, { align: "center" });
 
   // Reset text color back to black after tagline
   doc.setTextColor(0);
@@ -193,6 +194,7 @@ function printPDF() {
     const fileName = `${name.replace(/\s+/g, "_")}_CGPA_Report.pdf`;
     doc.save(fileName);
 }
+
 
 
 
