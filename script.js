@@ -110,9 +110,7 @@ function printPDF() {
   // Reset text color back to black after tagline
   doc.setTextColor(0);
 
-    // DATE
-    doc.setFontSize(11);
-    doc.text(`Date: ${new Date().toLocaleDateString()}`, 160, 25, { align: "right" });
+   
 
     // STUDENT DETAILS TABLE
     doc.autoTable({
@@ -194,6 +192,7 @@ function printPDF() {
     const fileName = `${name.replace(/\s+/g, "_")}_CGPA_Report.pdf`;
     doc.save(fileName);
 }
+
 
 
 
