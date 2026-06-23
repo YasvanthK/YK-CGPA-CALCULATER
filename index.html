@@ -3,131 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <title>YK CGPA Calculator</title>
-   <link rel="icon" type="image/jpeg" href="image.jpeg">
-
-    
+    <link rel="icon" type="image/jpeg" href="image.jpeg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="description" content="YK CGPA Calculator - Calculate SGPA and CGPA easily with professional PDF download.">
     <meta name="keywords" content="CGPA calculator, SGPA calculator, engineering CGPA, YK CGPA calculator">
     <meta name="author" content="Yasvanth K">
     <meta name="google-site-verification" content="MYZ-ZEnQbejhTgj3Tdv_4UW56Jh6p8INaeP_SVhXID8" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 
-    <!-- jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-    <!-- jsPDF AutoTable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
 
 <div class="container">
-    <h1 style="margin: 20px 0 5px 0; font-size: 32px; font-weight: 600; letter-spacing: 2px;  colour:#000000; text-align: center; font-family: 'Segoe UI', sans-serif;">
-YK CGPA Calculator
-</h1>
+    <header class="app-header">
+        <h1>YK CGPA Calculator</h1>
+        <p class="tagline">Your Grades. Your Growth.</p>
+    </header>
 
-    <p style="margin: 0; font-size: 18px; font-weight: 500; color: #555; text-align: center;">Your Grades. Your Growth.</p>
-
-    <br>
-    <br>
-    <!-- Previous CGPA Toggle -->
     <div class="toggle-box">
         <label class="switch">
             <input type="checkbox" id="prevToggle" onchange="togglePrevious()">
             <span class="slider"></span>
         </label>
-        <span>Include Previous CGPA</span>
+        <span class="toggle-label">Include Previous CGPA</span>
     </div>
 
-    <!-- Previous CGPA Inputs -->
     <div id="previousSection" class="previous hidden">
-        <input type="number" id="prevCgpa" step="0.01" placeholder="Previous CGPA">
-        <input type="number" id="prevCredits" placeholder="Previous Credits">
-    </div>
-
-    <!-- Subject Table -->
-    <table>
-        <thead>
-            <tr>
-                <th>Subject</th>
-                <th>Credits</th>
-                <th>Grade</th>
-            </tr>
-        </thead>
-        <tbody id="subjectTable">
-            <tr>
-                <td><input type="text" placeholder="Subject"></td>
-                <td><input type="number" min="1" placeholder="Credits"></td>
-                <td>
-                    <select>
-                        <option value="">Grade</option>
-                        <option value="10">O</option>
-                        <option value="9">A+</option>
-                        <option value="8">A</option>
-                        <option value="7">B+</option>
-                        <option value="6">B</option>
-                        <option value="5">C</option>
-                        <option value="0">U</option>
-                    </select>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <!-- Buttons -->
-    <div class="buttons">
-        <button onclick="addRow()">Add Subject</button>
-        <button onclick="removeLastRow()">Remove Subject</button>
-        <button onclick="calculate()">Calculate</button>
-    </div>
-
-    <!-- Results -->
-    <div class="results">
-        <p id="sgpa"></p>
-        <p id="cgpa"></p>
-        <p id="totalCredits"></p>
-    </div>
-
-    <!-- Print Section -->
-    <div id="printSection" class="print-section hidden">
-        <h3>Student Details</h3>
-        <div class="print-inputs">
-            <input type="text" id="studentName" placeholder="Name">
-            <input type="text" id="rollNo" placeholder="Roll No">
-            <input type="text" id="collegeName" placeholder="College Name">
+        <div class="input-group">
+            <input type="number" id="prevCgpa" step="0.01" placeholder=" " required>
+            <label>Previous CGPA</label>
         </div>
-        <button onclick="printPDF()">Print / Download PDF</button>
+        <div class="input-group">
+            <input type="number" id="prevCredits" placeholder=" " required>
+            <label>Previous Credits</label>
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Credits</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody id="subjectTable">
+                <tr>
+                    <td><input type="text" placeholder="e.g., Mathematics"></td>
+                    <td><input type="number" min="1" placeholder="Credits"></td>
+                    <td>
+                        <div class="select-wrapper">
+                            <select>
+                                <option value="">Grade</option>
+                                <option value="10">O (10)</option>
+                                <option value="9">A+ (9)</option>
+                                <option value="8">A (8)</option>
+                                <option value="7">B+ (7)</option>
+                                <option value="6">B (6)</option>
+                                <option value="5">C (5)</option>
+                                <option value="0">U (0)</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="buttons">
+        <button class="btn btn-secondary" onclick="addRow()">Add Subject</button>
+        <button class="btn btn-secondary" onclick="removeLastRow()">Remove Subject</button>
+        <button class="btn btn-primary" onclick="calculate()">Calculate Now</button>
+    </div>
+
+    <div class="results">
+        <div class="result-card">
+            <span class="result-title">SGPA</span>
+            <p id="sgpa">-</p>
+        </div>
+        <div class="result-card">
+            <span class="result-title">CGPA</span>
+            <p id="cgpa">-</p>
+        </div>
+        <div class="result-card">
+            <span class="result-title">Total Credits</span>
+            <p id="totalCredits">-</p>
+        </div>
+    </div>
+
+    <div id="printSection" class="print-section hidden">
+        <h3>Verify Student Details</h3>
+        <div class="print-inputs">
+            <div class="input-group">
+                <input type="text" id="studentName" placeholder=" " required>
+                <label>Full Name</label>
+            </div>
+            <div class="input-group">
+                <input type="text" id="rollNo" placeholder=" " required>
+                <label>Roll Number</label>
+            </div>
+            <div class="input-group">
+                <input type="text" id="collegeName" placeholder=" " required>
+                <label>College/University</label>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="printPDF()">
+            Export Premium PDF Statement
+        </button>
     </div>
     
-    <div>
-     <section class="about-section">
-     <h2>About YK CGPA Calculator</h2>
-     <p>
-    YK CGPA Calculator is designed for college students to easily calculate SGPA and CGPA.
-    It supports including previous CGPA, credit-based calculations, and allows professional PDF downloads.
-    Fully responsive for desktop and mobile with modern black-and-white design.
-  </p>
-</section>
-</div>
+    <section class="about-section">
+        <h2>About YK CGPA Calculator</h2>
+        <p>
+            YK CGPA Calculator is an advanced academic utility built for seamless performance tracking. 
+            It processes semester credit loads alongside historical records to output precise SGPA/CGPA parameters, wrapped beautifully inside a high-contrast editorial viewport layout.
+        </p>
+    </section>
 
     <footer class="footer">
-  <p>© 2026 YK CGPA Calculator. All rights reserved.</p>
-  <p>Designed & Developed by Yasvanth K</p>
-</footer>
-
+        <p>© 2026 YK CGPA Calculator. All rights reserved.</p>
+        <p class="credits">Designed & Developed by Yasvanth K</p>
+    </footer>
 </div>
 
 <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
